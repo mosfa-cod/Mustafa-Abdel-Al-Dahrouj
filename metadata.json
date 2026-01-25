@@ -1,0 +1,7 @@
+{
+  "name": "Super English Kids Academy",
+  "description": "An interactive, vibrant, and fun English learning platform for children aged 8-10, featuring videos, quizzes, word-picture associations, and AI-powered pronunciation practice.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
