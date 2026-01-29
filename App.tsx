@@ -20,11 +20,9 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('darkMode', String(darkMode));
     if (darkMode) {
-      document.body.classList.add('bg-[#1e1b4b]', 'text-white');
-      document.body.classList.remove('bg-[#f2f6ff]', 'text-[#2d3748]');
+      document.body.classList.add('dark');
     } else {
-      document.body.classList.add('bg-[#f2f6ff]', 'text-[#2d3748]');
-      document.body.classList.remove('bg-[#1e1b4b]', 'text-white');
+      document.body.classList.remove('dark');
     }
   }, [darkMode]);
 
@@ -55,19 +53,37 @@ const App: React.FC = () => {
   return (
     <div className={`min-h-screen flex flex-col ${darkMode ? 'dark' : ''}`}>
       {/* Header */}
-      <header className={`p-6 sticky top-0 z-50 shadow-lg flex flex-col md:flex-row items-center justify-between transition-colors duration-300 ${darkMode ? 'bg-[#312e81]' : 'bg-[#4f46e5] text-white'}`}>
+      <header className={`p-6 sticky top-0 z-50 shadow-lg backdrop-blur-md flex flex-col md:flex-row items-center justify-between transition-all duration-300 ${
+        darkMode 
+          ? 'bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-b border-slate-700' 
+          : 'bg-gradient-to-r from-indigo-600 via-indigo-500 to-purple-600 border-b border-indigo-400 text-white shadow-xl'
+      }`}>
         <div className="flex items-center gap-3 mb-4 md:mb-0">
           <span className="text-4xl bouncy">🎈</span>
-          <h1 className="text-2xl md:text-3xl font-extrabold tracking-tight">Super English Academy</h1>
+          <div>
+            <h1 className={`text-2xl md:text-3xl font-black tracking-tight text-balance ${darkMode ? 'text-white' : 'text-white'}`}>
+              Super English Academy
+            </h1>
+            <p className={`text-xs font-semibold ${darkMode ? 'text-slate-300' : 'text-indigo-100'}`}>Learn English with Fun! 🌟</p>
+          </div>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="bg-white/20 px-4 py-2 rounded-full font-bold flex items-center gap-2">
-            <span className="text-yellow-400">⭐</span> {score}
+        <div className="flex items-center gap-3">
+          <div className={`px-4 py-2 rounded-full font-bold flex items-center gap-2 backdrop-blur-sm ${
+            darkMode 
+              ? 'bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-400/30 text-yellow-300' 
+              : 'bg-white/20 border border-white/30 text-white'
+          }`}>
+            <span className="text-xl">⭐</span> 
+            <span className="font-black text-lg">{score}</span>
           </div>
           <button 
             onClick={toggleDarkMode}
-            className="p-3 rounded-full bg-white/10 hover:bg-white/20 transition-all text-xl"
+            className={`p-3 rounded-full transition-all text-xl font-bold ${
+              darkMode 
+                ? 'bg-yellow-500/20 hover:bg-yellow-500/30 border border-yellow-400/30 text-yellow-300' 
+                : 'bg-white/20 hover:bg-white/30 border border-white/30 text-white'
+            }`}
             title="Toggle Light/Dark Mode"
           >
             {darkMode ? '☀️' : '🌙'}
@@ -76,8 +92,12 @@ const App: React.FC = () => {
       </header>
 
       {/* Navigation */}
-      <nav className="p-4 bg-white/50 dark:bg-black/20 backdrop-blur-md sticky top-[104px] md:top-[88px] z-40 overflow-x-auto">
-        <div className="max-w-6xl mx-auto flex gap-3 justify-start md:justify-center">
+      <nav className={`p-4 backdrop-blur-md sticky top-20 md:top-24 z-40 overflow-x-auto border-b transition-colors ${
+        darkMode 
+          ? 'bg-slate-800/50 border-slate-700' 
+          : 'bg-white/80 border-indigo-100'
+      }`}>
+        <div className="max-w-6xl mx-auto flex gap-2 justify-start md:justify-center">
           <NavButton 
             active={currentSection === Section.VIDEOS} 
             onClick={() => setCurrentSection(Section.VIDEOS)}
@@ -112,14 +132,20 @@ const App: React.FC = () => {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full transition-all duration-500">
-        {renderSection()}
+      <main className={`flex-grow p-4 md:p-8 max-w-7xl mx-auto w-full transition-all duration-500 ${darkMode ? 'bg-slate-900' : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50'}`}>
+        <div className="slide-in-up">
+          {renderSection()}
+        </div>
       </main>
 
       {/* Footer */}
-      <footer className="p-8 text-center opacity-70">
-        <p className="text-lg">Made with ❤️ for future superstars!</p>
-        <p className="text-sm mt-2">© 2024 Super English Academy</p>
+      <footer className={`p-8 text-center transition-all ${
+        darkMode 
+          ? 'bg-slate-800 border-t border-slate-700 text-slate-300' 
+          : 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-t border-indigo-400'
+      }`}>
+        <p className="text-lg font-semibold">Made with 💜 for future superstars!</p>
+        <p className="text-sm mt-2 opacity-80">© 2024 Super English Academy • Keep Learning! 🚀</p>
       </footer>
     </div>
   );
